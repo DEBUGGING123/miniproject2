@@ -31,8 +31,8 @@ function App() {
     const product = products.find((p) => p.id === selectedId);
     content = <Article product={product} onBack={() => setMode("HOME")} onCheck={updateProductChecked}/>;
   } else if (mode === "CREATE") {
-    content = <Create onAdd={(title, price, description, image, password) => {
-      const newProduct = { id: nextId, title, price, description, image, password, checked: false };
+    content = <Create onAdd={(title, price, description, image) => {
+      const newProduct = { id: nextId, title, price, description, image, checked: false };
       setProducts([...products, newProduct]);
       setNextId(nextId + 1);
       setMode("HOME");
