@@ -10,7 +10,18 @@ function App() {
   const [products, setProducts] = useState([]);
   const [nextId, setNextId] = useState(1);
 
+
+  const updateProductChecked = (id, checked) => {
+    setProducts(products.map(products => 
+      products.id == id ? {...products, checked} : products
+    ));
+  };
+
+
   let content = null;
+
+
+
   if (mode === "HOME") {
     content = <Nav products={products} onSelect={(id) => {
       setMode("DETAIL");
@@ -18,10 +29,10 @@ function App() {
     }} />;
   } else if (mode === "DETAIL") {
     const product = products.find((p) => p.id === selectedId);
-    content = <Article product={product} onBack={() => setMode("HOME")} />;
+    content = <Article product={product} onBack={() => setMode("HOME")} onCheck={updateProductChecked}/>;
   } else if (mode === "CREATE") {
     content = <Create onAdd={(title, price, description, image, password) => {
-      const newProduct = { id: nextId, title, price, description, image, password };
+      const newProduct = { id: nextId, title, price, description, image, password, checked: false };
       setProducts([...products, newProduct]);
       setNextId(nextId + 1);
       setMode("HOME");

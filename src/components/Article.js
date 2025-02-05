@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
-export default function Article({ product, onBack }) {
+export default function Article({ product, onBack, onCheck }) {
     const [inputPassword, setInputPassword] = useState("");
-    const [checked, setChecked] = useState(false);
+   
   if (!product) return <p>상품을 찾을 수 없습니다.</p>;
 
   const handleCheck = () => {
     if(inputPassword == product.password){
-        setChecked(true);
+        onCheck(product.id, true);
     }else{
         alert("비밀번호를 확인해주세요.");
     }
@@ -18,7 +18,7 @@ export default function Article({ product, onBack }) {
     <article>
       <h2>{product.title}</h2>
       {product.image && <img src={product.image} alt={product.title}/>}
-      <p><strong>판매 여부 : {checked ? <FaCheck/> : " " }</strong></p>
+      <p><strong>판매 여부 : {product.checked ? <FaCheck/> : " " }</strong></p>
       <p><input type="password" placeholder="비밀번호를 입력해주세요!" value={inputPassword} onChange={(e) => {setInputPassword(e.target.value)}}></input></p>
       <button onClick={handleCheck}>판매확인</button>
       <p><strong>가격:</strong> {product.price}</p>
